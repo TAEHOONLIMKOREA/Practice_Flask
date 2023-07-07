@@ -4,13 +4,29 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from flask import Flask, render_template
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'hello Taehoon'
+
+@app.route('/coder')
+def coder():
+    return 'I am AutoCoder.'
+
+# .py가 실행되는 경로 안에 'templates' 폴더 생성 후 그 안에 test.html 파일 넣어 두기
+@app.route('/autocoder')
+def autocoder():
+    return render_template("test.html")
+
+@app.route('/test2')
+def test2():
+    return render_template("test2.html")
+
+def main():
+    app.run(host='127.0.0.1', debug=False, port=80)
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
