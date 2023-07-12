@@ -3,10 +3,11 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from flask import Flask, render_template
-from flask import request, redirect
+from flask import url_for, session, request, redirect
 import random
 
 app = Flask(__name__)
+app.secret_key = "lkjds#2-1j@dsp!ldaskfj"
 
 next_id = 4
 topics = [
@@ -30,7 +31,10 @@ def template(contents, content, id=None):
     return f'''<!doctype html>
     <html>
         <body>
-            <h1><a href="/">WEB</a><h1>
+            <h1>
+                <a href="/">WEB</a>
+                <a href="/home/">login</a>
+            <h1>
             <ol>
                 {contents}
             </ol>
@@ -124,15 +128,33 @@ def update(id):
         url = '/read/' + str(id)
         return redirect(url)
 
+ID = 'hello'
+PW = "world"
 
 # .py가 실행되는 경로 안에 'templates' 폴더 생성 후 그 안에 test.html 파일 넣어 두기
-@app.route('/autocoder')
-def autocoder():
-    return render_template("test.html")
+@app.route("/home/")
+def home():
+    if "userID" in session:
+        return render_template("home.html", username=session.get("userID"), login=True)
+    else:
+        return render_template("home.html", login=False)
 
-@app.route('/test2')
-def test2():
-    return render_template("test2.html")
+@app.route("/home/login", methods=["get"])
+def login():
+    global ID, PW
+    _id_ = request.args.get("loginId")
+    _password_ = request.args.get("loginPw")
+
+    if ID == _id_ and _password_ == PW:
+        session["userID"] = _id_
+        return redirect(url_for("home"))
+    else:
+        return redirect(url_for("home"))
+
+@app.route("/home/logout")
+def logout():
+    session.pop("userID")
+    return redirect(url_for("home"))
 
 def main():
     app.run(host='127.0.0.1', debug=True, port=80)
