@@ -55,8 +55,8 @@ def getContents():
 
 @app.route('/')
 def index():
-
-    return template(getContents(), '<h2>Welcome</h2>Hello, WEB')
+    # return template(getContents(), '<h2>Welcome</h2>Hello, WEB')
+    return render_template("index.html")
 
 @app.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
@@ -130,6 +130,10 @@ def update(id):
 
 ID = 'hello'
 PW = "world"
+
+@app.route("/test/")
+def test():
+    return render_template("test.html")
 
 # .py가 실행되는 경로 안에 'templates' 폴더 생성 후 그 안에 test.html 파일 넣어 두기
 @app.route("/home/")
