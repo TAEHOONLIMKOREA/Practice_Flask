@@ -131,11 +131,11 @@ def update(id):
 ID = 'hello'
 PW = "world"
 
-@app.route("/test/")
+@app.route("/DashBoard/")
 def test():
-    return render_template("test.html")
+    return render_template("DashBoard.html")
 
-# .py가 실행되는 경로 안에 'templates' 폴더 생성 후 그 안에 test.html 파일 넣어 두기
+# .py가 실행되는 경로 안에 'templates' 폴더 생성 후 그 안에 DashBoard.html 파일 넣어 두기
 @app.route("/home/")
 def home():
     if "userID" in session:
